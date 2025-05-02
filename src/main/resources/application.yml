@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev  # "prod" если продакшен
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
