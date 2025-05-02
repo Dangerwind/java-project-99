@@ -27,4 +27,4 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Запуск .jar (замени имя на фактическое, если отличается)
-CMD ["java", "-jar", "build/libs/app-0.0.2-SNAPSHOT.jar"]
+CMD ["java", "-jar", "build/libs/app-0.0.1-SNAPSHOT.jar"]
