@@ -13,7 +13,7 @@ import hexlet.code.model.User;
 import hexlet.code.dto.UserDTO;
 import hexlet.code.dto.UserCreateDTO;
 import hexlet.code.dto.UserUpdateDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 
 //import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,8 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 public abstract class UserMapper {
-     @Mapping( target = "passwordDigest", source = "password")
+    @Mapping(target = "passwordDigest", source = "password")
     public abstract User map(UserCreateDTO user);
+
+    @Mapping(target = "password", source = "passwordDigest")
+    public abstract UserCreateDTO mapCreate(User user);
 
     public abstract User map(UserDTO user);
 

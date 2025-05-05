@@ -6,12 +6,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Column;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,8 +48,8 @@ public class User {
     private String email;
 
 
-    @NotBlank
-    @NotNull
+  //  @NotBlank
+  //  @NotNull
     private String passwordDigest;
 
     @CreatedDate

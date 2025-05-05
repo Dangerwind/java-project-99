@@ -2,6 +2,7 @@ package hexlet.code.controller.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hexlet.code.dto.UserDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
@@ -17,11 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-//import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-//import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor;
 import hexlet.code.util.ModelGenerator;
 
 import org.junit.jupiter.api.AfterEach;
@@ -104,10 +103,10 @@ public class UsersControllerTest {
         var body = response.getContentAsString();
 
 
-        List<UserDTO> userDTOS = om.readValue(body, new TypeReference<>() {});
+        List<UserDTO> userDTOS = om.readValue(body, new TypeReference<>() { });
 
         var actual = userDTOS.stream()
-                .map( (m) -> userMapper.map(m))
+                .map((m) -> userMapper.map(m))
                 .toList();
         var expected = userRepository.findAll();
         Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
@@ -115,21 +114,23 @@ public class UsersControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        var data = Instancio.of(modelGenerator.getUserModel())
-                .create();
-        System.out.println("---------- " + data + " ---------");
+        var data = userMapper.mapCreate(Instancio.of(modelGenerator.getUserModel()).create());
+
         var request = post("/api/users")
                 //  .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
+
         mockMvc.perform(request)
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andDo(print());
 
         var user = userRepository.findByEmail(data.getEmail()).orElse(null);
-
         assertNotNull(user);
-        assertThat(user.getFirstName()).isEqualTo(data.getFirstName());
-        assertThat(user.getLastName()).isEqualTo(data.getLastName());
+        assertThat(user.getFirstName()).isEqualTo(data.getFirstName().get());
+        assertThat(user.getLastName()).isEqualTo(data.getLastName().get());
+
+
     }
 
     @Test

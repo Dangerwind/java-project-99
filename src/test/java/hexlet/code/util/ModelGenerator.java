@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
 
 @Getter
 @Component
@@ -31,8 +30,7 @@ public class ModelGenerator {
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
-                .supply(Select.field(User::getPasswordDigest),
-                        () -> passwordEncoder.encode(faker.internet().password(3,15)))
+                .supply(Select.field(User.class, "passwordDigest"), () -> faker.internet().password(3, 10))
                 .toModel();
     }
 
