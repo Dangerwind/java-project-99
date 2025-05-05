@@ -30,9 +30,13 @@ public class UserService {
 //GET /api/users
     public List<UserDTO> index() {
         var users = userRepository.findAll();
-        return users.stream()
+        var ret = users.stream()
                 .map(userMapper::map)
                 .toList();
+        System.out.println(" ");
+        System.out.println("!!! " + ret + " !!!!!eee!!!");
+        System.out.println(" ");
+        return ret;
     }
 //GET /api/users/{id}
     public UserDTO show(long id) {

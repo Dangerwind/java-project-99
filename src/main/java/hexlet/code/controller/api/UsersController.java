@@ -52,7 +52,6 @@ public class UsersController {
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@RequestBody @Valid UserCreateDTO dto) {
-        System.out.println(" iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii " + dto + " !!!!!!!!!!!!!!");
         return userService.create(dto);
     }
 

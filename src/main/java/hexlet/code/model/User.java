@@ -18,11 +18,11 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.time.LocalDate;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
-
 
 @Entity
 @Getter
@@ -48,8 +48,8 @@ public class User {
     private String email;
 
 
-  //  @NotBlank
-  //  @NotNull
+    @NotBlank
+    @NotNull
     private String passwordDigest;
 
     @CreatedDate
@@ -57,9 +57,5 @@ public class User {
 
     @LastModifiedDate
     private LocalDate updatedAt;
-
-
-
-
 
 }

@@ -25,6 +25,8 @@ public class DataInitializer {
             User user = new User();
             user.setEmail("hexlet@example.com");
             user.setPasswordDigest(passwordEncoder.encode("qwerty"));
+            user.setFirstName("Hex111let");
+            user.setLastName("Exa222mple");
             userRepository.save(user);
         }
     }
