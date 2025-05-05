@@ -32,6 +32,21 @@ repositories {
 
 dependencies {
 
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+
+    implementation("org.instancio:instancio-junit:5.0.2")
+    implementation("net.javacrumbs.json-unit:json-unit-assertj:4.0.0")
+    implementation("net.datafaker:datafaker:2.4.3")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+
+    //testImplementation("org.springframework.security:spring-security-test")
+
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 

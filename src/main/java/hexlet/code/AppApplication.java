@@ -2,9 +2,16 @@ package hexlet.code;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import net.datafaker.Faker;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class AppApplication {
+
+    @Bean
+    public Faker getFaker() {
+        return new Faker();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);

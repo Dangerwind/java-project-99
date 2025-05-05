@@ -6,10 +6,16 @@ import jakarta.persistence.Table;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,34 +31,32 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-@ToString(includeFieldNames = true, onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(includeFieldNames = true, onlyExplicitlyIncluded = false)
 public class User {
     // id – уникальный идентификатор пользователя, генерируется автоматически
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @ToString.Include
     @EqualsAndHashCode.Include
     private Long id;
 
-    //    firstName - имя пользователя
-    // @NotBlank
-    @ToString.Include
     private String firstName;
 
-    //    lastName - фамилия пользователя
-    // @NotBlank
-    @ToString.Include
     private String lastName;
 
-    //    password - пароль
-    private String password;
+    @Email
+    @NotNull
+    @NotBlank
+    private String email;
 
-    //    createdAt - дата создания (регистрации) пользователя
+
+    @NotBlank
+    @NotNull
+    private String passwordDigest;
+
     @CreatedDate
     private LocalDate createdAt;
 
-    //    updatedAt – дата обновления данных пользователя
     @LastModifiedDate
     private LocalDate updatedAt;
 
