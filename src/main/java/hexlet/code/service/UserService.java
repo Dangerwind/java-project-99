@@ -33,9 +33,6 @@ public class UserService {
         var ret = users.stream()
                 .map(userMapper::map)
                 .toList();
-        System.out.println(" ");
-        System.out.println("!!! " + ret + " !!!!!eee!!!");
-        System.out.println(" ");
         return ret;
     }
 //GET /api/users/{id}
@@ -51,7 +48,6 @@ public class UserService {
         newUser.setPasswordDigest(passwordEncoder.encode(dto.getPassword()));
         userRepository.save(newUser);
 
-        System.out.println("!!!!!!!! cr !!!!!!!!!" + newUser + " cr !!!!!!!!");
         return userMapper.map(newUser);
     }
 // PUT /api/users/{id}
