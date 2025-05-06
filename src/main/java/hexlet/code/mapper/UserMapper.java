@@ -36,6 +36,7 @@ public abstract class UserMapper {
 
     public abstract User map(UserDTO user);
 
+
     public abstract UserDTO map(User user);
 
     public abstract void update(UserUpdateDTO userUpdateDTO, @MappingTarget User user);

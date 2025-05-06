@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.util.ModelGenerator;
@@ -122,15 +122,38 @@ public class UsersControllerTest {
                 .content(om.writeValueAsString(data));
 
         mockMvc.perform(request)
-                .andExpect(status().isCreated())
-                .andDo(print());
+                .andExpect(status().isCreated());
+              // .andDo(print());
 
         var user = userRepository.findByEmail(data.getEmail()).orElse(null);
         assertNotNull(user);
         assertThat(user.getFirstName()).isEqualTo(data.getFirstName().get());
         assertThat(user.getLastName()).isEqualTo(data.getLastName().get());
+    }
 
+    @Test
+    public void testNoValidPasswordCreateUser() throws Exception {
+        var data = new HashMap<>();
+        data.put("email", "valid@valid.com");
+        data.put("password", "va");
 
+        var request = post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
+    }
+    @Test
+    public void testNoValidEmailCreateUser() throws Exception {
+        var data = new HashMap<>();
+        data.put("email", "validvalid.com");
+        data.put("password", "valid");
+
+        var request = post("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
     }
 
     @Test
