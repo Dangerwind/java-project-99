@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/welcome").permitAll()
                         .requestMatchers("/index.html").permitAll()
+                        .requestMatchers("/assets/**").permitAll()
 
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
