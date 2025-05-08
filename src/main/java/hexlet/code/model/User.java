@@ -36,7 +36,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(includeFieldNames = true, onlyExplicitlyIncluded = false)
 public class User implements UserDetails, BaseEntity {
-    // id – уникальный идентификатор пользователя, генерируется автоматически
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include

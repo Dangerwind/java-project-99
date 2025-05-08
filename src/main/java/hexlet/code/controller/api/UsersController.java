@@ -1,11 +1,11 @@
 package hexlet.code.controller.api;
 
 
-import hexlet.code.dto.UserCreateDTO;
-import hexlet.code.dto.UserDTO;
-import hexlet.code.dto.UserUpdateDTO;
-import hexlet.code.mapper.UserMapper;
-import hexlet.code.repository.UserRepository;
+import hexlet.code.dto.user.UserCreateDTO;
+import hexlet.code.dto.user.UserDTO;
+import hexlet.code.dto.user.UserUpdateDTO;
+//import hexlet.code.mapper.UserMapper;
+//import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 
 import jakarta.validation.Valid;
@@ -29,11 +29,11 @@ import java.util.List;
 @RequestMapping(path = "/api/users")
 public class UsersController {
 
-    @Autowired
-    private UserRepository userRepository;
+ //   @Autowired
+ //   private UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+ //   @Autowired
+ //   private UserMapper userMapper;
     @Autowired
     private UserService userService;
 
@@ -50,7 +50,6 @@ public class UsersController {
     @ResponseStatus(HttpStatus.OK)
     public UserDTO show(@PathVariable Long id) {
         return userService.show(id);
-
     }
 
     @PostMapping(path = "")
