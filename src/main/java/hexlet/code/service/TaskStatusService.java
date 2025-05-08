@@ -50,11 +50,11 @@ public class TaskStatusService {
 
     // PUT /api/task_statuses/{id}
     public TaskStatusDTO update(long id, TaskStatusUpdateDTO dto) {
-        var user = taskStatusRepository.findById(id)
+        var taskStatus = taskStatusRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
-        taskStatusMapper.update(dto, user);
-        taskStatusRepository.save(user);
-        return taskStatusMapper.map(user);
+        taskStatusMapper.update(dto, taskStatus);
+        taskStatusRepository.save(taskStatus);
+        return taskStatusMapper.map(taskStatus);
     }
 
     public void delete(long id) {

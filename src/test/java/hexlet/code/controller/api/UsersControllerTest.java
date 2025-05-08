@@ -143,6 +143,7 @@ public class UsersControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     public void testNoValidEmailCreateUser() throws Exception {
         var data = new HashMap<>();

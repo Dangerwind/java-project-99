@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 
 @Getter
 @Component
@@ -37,8 +39,12 @@ public class ModelGenerator {
 
         taskStatusModel = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
-                .supply(Select.field(TaskStatus::getName), () -> faker.gameOfThrones().house())
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.hacker().noun())
+                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().words(2).stream()
+                        .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
+                        .collect(Collectors.joining(" ")))
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().words(2).stream()
+                        .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
+                        .collect(Collectors.joining("_")))
                 .toModel();
     }
 

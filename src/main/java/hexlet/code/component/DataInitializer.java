@@ -33,8 +33,6 @@ public class DataInitializer {
             User user = new User();
             user.setEmail("hexlet@example.com");
             user.setPasswordDigest(passwordEncoder.encode("qwerty"));
-           // user.setFirstName("Hex111let");
-           // user.setLastName("Exa222mple");
             userRepository.save(user);
         }
     }
@@ -45,7 +43,7 @@ public class DataInitializer {
             var task = taskStatusRepository.findBySlug(status);
             task.ifPresentOrElse(x -> { }, () -> {
                 TaskStatus taskStatus = new TaskStatus();
-                taskStatus.setName(status);
+                taskStatus.setName(status.replace("_", " "));
                 taskStatus.setSlug(status);
                 taskStatusRepository.save(taskStatus);
             });
