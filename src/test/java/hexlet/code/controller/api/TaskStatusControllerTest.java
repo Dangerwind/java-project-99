@@ -63,8 +63,8 @@ public class TaskStatusControllerTest {
     @Autowired
     private WebApplicationContext wac;
 
-    @Autowired
-    private TaskStatusRepository userRepository;
+   // @Autowired
+   // private TaskStatusRepository taskStatusRepository;
 
     @Autowired
     private Faker faker;
@@ -111,7 +111,7 @@ public class TaskStatusControllerTest {
         var actual = taskStatusDTOS.stream()
                 .map((m) -> taskStatusMapper.map(m))
                 .toList();
-        var expected = userRepository.findAll();
+        var expected = taskStatusRepository.findAll();
         Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
@@ -132,6 +132,7 @@ public class TaskStatusControllerTest {
         assertNotNull(tsakStatus);
         assertThat(tsakStatus.getName()).isEqualTo(data.getName());
     }
+
 
     @Test
     public void testCreateNoValidSlugPTaskStatus() throws Exception {
@@ -164,8 +165,6 @@ public class TaskStatusControllerTest {
     public void testUpdateTaskStatus() throws Exception {
 
         var data = taskStatusMapper.mapCreate(Instancio.of(modelGenerator.getTaskStatusModel()).create());
-
-        System.out.println(data + " --------------------- ");
         var request = put("/api/task_statuses/" + testTaskStatus.getId())
                 //  .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -174,10 +173,10 @@ public class TaskStatusControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
-        var user = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
-        assertNotNull(user);
-        assertThat(user.getName()).isEqualTo(data.getName());
-        assertThat(user.getSlug()).isEqualTo(data.getSlug());
+        var taksStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
+        assertNotNull(taksStatus);
+        assertThat(taksStatus.getName()).isEqualTo(data.getName());
+        assertThat(taksStatus.getSlug()).isEqualTo(data.getSlug());
     }
 
     @Test
@@ -198,10 +197,10 @@ public class TaskStatusControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andReturn();
-        var user = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
-        assertNotNull(user);
-        assertThat(user.getName()).isEqualTo(testTaskStatus.getName());
-        assertThat(user.getSlug()).isEqualTo(data.get("slug"));
+        var taksStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
+        assertNotNull(taksStatus);
+        assertThat(taksStatus.getName()).isEqualTo(testTaskStatus.getName());
+        assertThat(taksStatus.getSlug()).isEqualTo(data.get("slug"));
     }
 
     @Test
@@ -223,8 +222,8 @@ public class TaskStatusControllerTest {
         mockMvc.perform(delete("/api/task_statuses/" + testTaskStatus.getId()))
                 .andExpect(status().isNoContent());
 
-        var user = userRepository.findById(testTaskStatus.getId()).orElse(null);
-        assertThat(user).isNull();
+        var taksStatus = taskStatusRepository.findById(testTaskStatus.getId()).orElse(null);
+        assertThat(taksStatus).isNull();
 
     }
 }

@@ -10,6 +10,7 @@ import hexlet.code.service.UserService;
 
 import jakarta.validation.Valid;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,7 @@ public class UsersController {
     @GetMapping(path = "")
     public  ResponseEntity<List<UserDTO>> index() {
         var result =  userService.index();
+
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))
                 .body(result);

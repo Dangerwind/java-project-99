@@ -48,6 +48,8 @@ public class DataInitializer {
                 taskStatusRepository.save(taskStatus);
             });
         });
-
     }
+
+
+
 }

@@ -32,8 +32,8 @@ import java.util.List;
 public class TaskStatusController {
 
 
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
+//    @Autowired
+//    private TaskStatusRepository taskStatusRepository;
 
 //    @Autowired
 //    private TaskStatusMapper taskStatusMapper;
@@ -51,7 +51,7 @@ public class TaskStatusController {
 //GET /api/task_statuses
     @GetMapping(path = "")
     public ResponseEntity<List<TaskStatusDTO>> index() {
-        List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
+       // List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
         var result = taskStatusService.index();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))

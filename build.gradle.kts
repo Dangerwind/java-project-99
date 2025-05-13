@@ -66,6 +66,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+// для отладки
+    implementation("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.withType<Test> {
