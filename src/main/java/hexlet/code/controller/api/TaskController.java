@@ -4,16 +4,15 @@ import hexlet.code.dto.task.TaskCreateDTO;
 import hexlet.code.dto.task.TaskDTO;
 import hexlet.code.dto.task.TaskParamsDTO;
 import hexlet.code.dto.task.TaskUpdateDTO;
-import hexlet.code.mapper.TaskMapper;
-import hexlet.code.repository.TaskRepository;
+
 import hexlet.code.service.TaskService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.Mapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,19 +25,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/tasks")
+@AllArgsConstructor
 public class TaskController {
 
-    @Autowired
     private TaskService taskService;
-
-    @Autowired
-    private TaskMapper taskMapper;
-
-    @Autowired
-    private TaskRepository taskRepository;
-
-
-
 
  //GET /api/tasks/{id}
     @GetMapping(path = "/{id}")

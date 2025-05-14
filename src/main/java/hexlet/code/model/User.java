@@ -34,14 +34,12 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(includeFieldNames = true, onlyExplicitlyIncluded = false)
 public class User implements UserDetails, BaseEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
-
 
     @Email
     @NotNull
@@ -53,7 +51,7 @@ public class User implements UserDetails, BaseEntity {
     private String lastName;
 
     @NotBlank
-    @NotNull
+   // @NotNull
     private String passwordDigest;
 
     @CreatedDate

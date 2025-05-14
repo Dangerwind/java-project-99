@@ -4,6 +4,7 @@ import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,12 +27,14 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TaskRepository taskRepository;
 
-//GET /api/users
+    //GET /api/users
     public List<UserDTO> index() {
         var users = userRepository.findAll();
         var ret = users.stream()
-                .map(userMapper::map)
+                .map((user) -> userMapper.map(user))
                 .toList();
         return ret;
     }
@@ -55,7 +58,7 @@ public class UserService {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
         userMapper.update(dto, user);
-        if (dto.getPassword() != null) {
+        if (dto.getPassword() != null && dto.getPassword().isPresent()) {
             user.setPasswordDigest(passwordEncoder.encode(dto.getPassword().get()));
         }
         userRepository.save(user);
@@ -63,6 +66,9 @@ public class UserService {
     }
 
     public void delete(long id) {
+        if (taskRepository.existsByAssigneeId(id)) {
+            throw new RuntimeException("Нельзя удалить пользователя, у него есть задача");
+        }
         userRepository.deleteById(id);
     }
 

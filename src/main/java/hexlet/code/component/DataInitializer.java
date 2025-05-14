@@ -1,14 +1,13 @@
 package hexlet.code.component;
 
-
-
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
+
 import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -24,6 +23,7 @@ public class DataInitializer {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 

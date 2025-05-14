@@ -11,11 +11,8 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Long id;
-
     private String email;
-
     private String firstName;
-
     private String lastName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

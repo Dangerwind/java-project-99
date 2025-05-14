@@ -4,14 +4,11 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
-//import hexlet.code.mapper.UserMapper;
-//import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 
 import jakarta.validation.Valid;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,16 +25,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/users")
+@AllArgsConstructor
 public class UsersController {
 
- //   @Autowired
- //   private UserRepository userRepository;
-
- //   @Autowired
- //   private UserMapper userMapper;
-    @Autowired
     private UserService userService;
-
 
     @GetMapping(path = "")
     public  ResponseEntity<List<UserDTO>> index() {

@@ -12,6 +12,7 @@ import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusService;
 //import hexlet.code.service.UserService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +30,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/task_statuses")
+@AllArgsConstructor
 public class TaskStatusController {
 
-
-//    @Autowired
-//    private TaskStatusRepository taskStatusRepository;
-
-//    @Autowired
-//    private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
     private TaskStatusService taskStatusService;
 
 //GET /api/task_statuses/{id}
@@ -50,8 +44,8 @@ public class TaskStatusController {
 
 //GET /api/task_statuses
     @GetMapping(path = "")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TaskStatusDTO>> index() {
-       // List<TaskStatus> taskStatuses = taskStatusRepository.findAll();
         var result = taskStatusService.index();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(result.size()))

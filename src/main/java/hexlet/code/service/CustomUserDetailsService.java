@@ -1,20 +1,23 @@
 package hexlet.code.service;
 
+import hexlet.code.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 //import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
-
+@AllArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsManager {
 
-    @Autowired
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -25,7 +28,11 @@ public class CustomUserDetailsService implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails userData) {
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+        var user = new User();
+        user.setEmail(userData.getUsername());
+        var hashedPassword = passwordEncoder.encode(userData.getPassword());
+        user.setPasswordDigest(hashedPassword);
+        userRepository.save(user);
     }
 
     @Override

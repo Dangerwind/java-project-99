@@ -9,20 +9,21 @@ import hexlet.code.dto.task.TaskStatusUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskStatusMapper;
 
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@AllArgsConstructor
 @Service
 public class TaskStatusService {
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
 
-    @Autowired
+    private TaskStatusRepository taskStatusRepository;
     private TaskStatusMapper taskStatusMapper;
+    private TaskRepository taskRepository;
 
 
     //GET /api/task_statuses/{id}
@@ -36,7 +37,7 @@ public class TaskStatusService {
     public List<TaskStatusDTO> index() {
         var taskStatuses = taskStatusRepository.findAll();
         var ret = taskStatuses.stream()
-                .map(taskStatusMapper::map)
+                .map( (task) -> taskStatusMapper.map(task))
                 .toList();
         return ret;
     }
@@ -58,8 +59,12 @@ public class TaskStatusService {
     }
 
     public void delete(long id) {
+        var taskStatus = taskStatusRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+
+        if (taskRepository.existsByTaskStatus(taskStatus)) {
+            throw new RuntimeException("Нельзя удалить статус, он связан с задачей");
+        }
         taskStatusRepository.deleteById(id);
     }
-
-
 }

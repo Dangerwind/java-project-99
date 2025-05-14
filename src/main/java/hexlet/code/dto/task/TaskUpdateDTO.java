@@ -17,12 +17,11 @@ public class TaskUpdateDTO {
     @JsonProperty("assignee_id")
     private JsonNullable<Long> assigneeId;
 
-    @NotBlank
-    @NotNull
+  //  @NotBlank
+  //  @NotNull
     public JsonNullable<String> title;
     public JsonNullable<String> content;
 
-    @NotBlank
-    @NotNull
+ //   @NotBlank
     public JsonNullable<String> status;
 }

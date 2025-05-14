@@ -27,7 +27,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
     @Table(name = "task")
     @EntityListeners(AuditingEntityListener.class)
     @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-    @ToString(includeFieldNames = true, onlyExplicitlyIncluded = false)
     public class Task implements BaseEntity {
 
         @Id
@@ -43,12 +42,11 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
         private String description;
 
+        @NotNull
         @ManyToOne
-        //@JoinColumn(name = "task_status_id")
         private TaskStatus taskStatus;
 
         @ManyToOne
-        //@JoinColumn(name = "assignee_id")
         private User assignee;
 
         @CreatedDate

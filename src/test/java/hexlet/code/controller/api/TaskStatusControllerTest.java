@@ -48,12 +48,6 @@ public class TaskStatusControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
- //   @Autowired
- //   private UsersController usersController;
-
- //   @Autowired
- //   private UserService userService;
-
     @Autowired
     private TaskStatusMapper taskStatusMapper;
 
@@ -62,9 +56,6 @@ public class TaskStatusControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
-
-   // @Autowired
-   // private TaskStatusRepository taskStatusRepository;
 
     @Autowired
     private Faker faker;
@@ -117,7 +108,7 @@ public class TaskStatusControllerTest {
 
     @Test
     public void testCreateTaskStatus() throws Exception {
-        var data = taskStatusMapper.mapCreate(Instancio.of(modelGenerator.getTaskStatusModel()).create());
+        var data = taskStatusMapper.map(Instancio.of(modelGenerator.getTaskStatusModel()).create());
 
         var request = post("/api/task_statuses")
                 //  .with(token)
@@ -137,7 +128,7 @@ public class TaskStatusControllerTest {
     @Test
     public void testCreateNoValidSlugPTaskStatus() throws Exception {
 
-        var data = taskStatusMapper.mapCreate(Instancio.of(modelGenerator.getTaskStatusModel()).create());
+        var data = taskStatusMapper.map(Instancio.of(modelGenerator.getTaskStatusModel()).create());
         data.setSlug(null);
 
 
@@ -150,7 +141,7 @@ public class TaskStatusControllerTest {
 
     @Test
     public void testCreateNoValidNamePTaskStatus() throws Exception {
-        var data = taskStatusMapper.mapCreate(Instancio.of(modelGenerator.getTaskStatusModel()).create());
+        var data = taskStatusMapper.map(Instancio.of(modelGenerator.getTaskStatusModel()).create());
         data.setName(null);
 
         var request = post("/api/task_statuses")
@@ -164,7 +155,7 @@ public class TaskStatusControllerTest {
     @Test
     public void testUpdateTaskStatus() throws Exception {
 
-        var data = taskStatusMapper.mapCreate(Instancio.of(modelGenerator.getTaskStatusModel()).create());
+        var data = taskStatusMapper.map(Instancio.of(modelGenerator.getTaskStatusModel()).create());
         var request = put("/api/task_statuses/" + testTaskStatus.getId())
                 //  .with(token)
                 .contentType(MediaType.APPLICATION_JSON)

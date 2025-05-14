@@ -48,19 +48,19 @@ public class ModelGenerator {
                         .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
                         .collect(Collectors.joining("_")))
                 .toModel();
-/*
+
         taskModel = Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
-                .supply(Select.field(Task::getIndex), () -> faker.number().numberBetween(1, 100))
-                .supply(Select.field(Task::getAssignee), () -> faker.number().numberBetween(1, 100))
+                .supply(Select.field(Task::getIndex), () -> Long.valueOf(faker.number().numberBetween(1, 100)))
+               // .supply(Select.field(Task::getAssignee), () -> faker.number().numberBetween(1, 100))
                 .supply(Select.field(Task::getName), () -> faker.company().buzzword())
                 .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence(5))
-                .supply(Select.field(Task::getTaskStatus), () -> faker.lorem().words(2).stream()
-                        .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
-                        .collect(Collectors.joining("_")))
+               // .supply(Select.field(Task::getTaskStatus), () -> faker.lorem().words(2).stream()
+               //         .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
+               //         .collect(Collectors.joining("_")))
                 .toModel();
 
- */
+
     }
 
 }

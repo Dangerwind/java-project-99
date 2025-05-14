@@ -23,7 +23,6 @@ import hexlet.code.component.RsaKeyProperties;
 public class EncodersConfig {
 
     @Autowired
-    // Создается ниже
     private RsaKeyProperties rsaKeys;
 
     @Bean

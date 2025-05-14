@@ -7,6 +7,7 @@ import hexlet.code.dto.task.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.specification.TaskSpecification;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TaskService {
-  //  @Autowired
+
     private TaskRepository taskRepository;
-
-  //  @Autowired
     private TaskMapper taskMapper;
-
-  //  @Autowired
     private TaskSpecification specBuilder;
 
 //GET /api/tasks/{id}
@@ -44,7 +41,6 @@ public class TaskService {
 // POST /api/tasks
     public TaskDTO create(TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
-
 
         taskRepository.save(task);
         return taskMapper.map(task);
