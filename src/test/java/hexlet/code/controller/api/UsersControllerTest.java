@@ -5,8 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.mapper.UserMapper;
+import hexlet.code.model.Label;
 import hexlet.code.model.User;
+import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
+import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
+import hexlet.code.service.LabelService;
 import hexlet.code.service.UserService;
 import net.datafaker.Faker;
 import org.assertj.core.api.Assertions;
@@ -37,6 +42,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -71,6 +77,16 @@ public class UsersControllerTest {
     @Autowired
     private ModelGenerator modelGenerator;
 
+    @Autowired
+    private LabelRepository labelRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
+
+
     private User testUser;
 
 //    private JwtRequestPostProcessor token;
@@ -91,6 +107,8 @@ public class UsersControllerTest {
 
     @AfterEach
     public void garbageDbDelete() {
+        taskRepository.deleteAll();
+        taskStatusRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -226,5 +244,24 @@ public class UsersControllerTest {
 
     }
 
+    @Test
+    public void testDeleteJoinUser() throws Exception {
 
+        var testLabel = Instancio.of(modelGenerator.getLabelModel()).create();
+        labelRepository.save(testLabel);
+
+        Set<Label> labelSet = Set.of(testLabel);
+
+        var testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel()).create();
+        taskStatusRepository.save(testTaskStatus);
+
+        var testTask = Instancio.of(modelGenerator.getTaskModel()).create();
+        testTask.setAssignee(testUser);
+        testTask.setTaskStatus(testTaskStatus);
+        testTask.setLabels(labelSet);
+        taskRepository.save(testTask);
+
+        mockMvc.perform(delete("/api/users/" + testUser.getId()))
+                .andExpect(status().isBadRequest());
+    }
 }

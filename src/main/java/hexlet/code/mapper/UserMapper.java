@@ -1,6 +1,7 @@
 package hexlet.code.mapper;
 
 
+import lombok.AllArgsConstructor;
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -6,6 +6,7 @@ import hexlet.code.dto.task.TaskStatusUpdateDTO;
 //import hexlet.code.dto.user.UserCreateDTO;
 //import hexlet.code.dto.user.UserDTO;
 //import hexlet.code.dto.user.UserUpdateDTO;
+import hexlet.code.exception.ResourceDeletionException;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskStatusMapper;
 
@@ -63,7 +64,7 @@ public class TaskStatusService {
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
 
         if (taskRepository.existsByTaskStatus(taskStatus)) {
-            throw new RuntimeException("Нельзя удалить статус, он связан с задачей");
+            throw new ResourceDeletionException("Нельзя удалить статус, он связан с задачей");
         }
         taskStatusRepository.deleteById(id);
     }

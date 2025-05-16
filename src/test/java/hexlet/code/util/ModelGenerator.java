@@ -1,5 +1,6 @@
 package hexlet.code.util;
 
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
@@ -23,6 +24,7 @@ public class ModelGenerator {
     private Model<User> userModel;
     private Model<TaskStatus> taskStatusModel;
     private Model<Task> taskModel;
+    private Model<Label> labelModel;
 
     @Autowired
     private Faker faker;
@@ -59,7 +61,10 @@ public class ModelGenerator {
                //         .map(w -> w.toLowerCase().replaceAll("[^a-z0-9]", ""))
                //         .collect(Collectors.joining("_")))
                 .toModel();
-
+        labelModel = Instancio.of(Label.class)
+                .ignore(Select.field(Label::getId))
+                .supply(Select.field(Label::getName), () -> faker.lorem().sentence(2))
+                .toModel();
 
     }
 

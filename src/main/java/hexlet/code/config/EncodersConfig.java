@@ -1,5 +1,6 @@
 package hexlet.code.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,16 +20,22 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 import hexlet.code.component.RsaKeyProperties;
 
+@AllArgsConstructor
 @Configuration
 public class EncodersConfig {
 
-    @Autowired
+
     private RsaKeyProperties rsaKeys;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+  //  @Bean
+ //   public PasswordEncoder passwordEncoder() {
+  //      return new BCryptPasswordEncoder();
+   // }
 
     @Bean
     JwtEncoder jwtEncoder() {

@@ -5,6 +5,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -18,13 +20,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
     @Entity
     @Getter
     @Setter
-    @Table(name = "task")
+    @Table(name = "tasks")
     @EntityListeners(AuditingEntityListener.class)
     @EqualsAndHashCode(onlyExplicitlyIncluded = true)
     public class Task implements BaseEntity {
@@ -52,5 +58,12 @@ import static jakarta.persistence.GenerationType.IDENTITY;
         @CreatedDate
         private LocalDate createdAt;
 
+        @ManyToMany
+        @JoinTable(
+                name = "task_labels",
+                joinColumns = @JoinColumn(name = "task_id"),
+                inverseJoinColumns = @JoinColumn(name = "label_id")
+        )
+        private Set<Label> labels = new HashSet<>();
 
 }

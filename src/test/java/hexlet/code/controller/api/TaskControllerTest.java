@@ -6,9 +6,11 @@ import hexlet.code.dto.task.TaskDTO;
 import hexlet.code.dto.task.TaskStatusDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.mapper.TaskStatusMapper;
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
+import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
@@ -31,6 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -75,6 +78,9 @@ public class TaskControllerTest {
     private Task testTask;
     private TaskStatus testTaskStatus;
     private User testUser;
+    private Label testLabel;
+    @Autowired
+    private LabelRepository labelRepository;
 
     @BeforeEach
     public void setUp() {
@@ -96,10 +102,16 @@ public class TaskControllerTest {
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel()).create();
         taskStatusRepository.save(testTaskStatus);
 
+        testLabel = Instancio.of(modelGenerator.getLabelModel()).create();
+        labelRepository.save(testLabel);
+
+        Set<Label> labelSet = Set.of(testLabel);
+
         testTask = Instancio.of(modelGenerator.getTaskModel()).create();
         testTask.setAssignee(internalUser);
         testTask.setTaskStatus(testTaskStatus);
-       // taskRepository.save(testTask);
+        testTask.setLabels(labelSet);
+        // taskRepository.save(testTask);
         // token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
     }
 
@@ -182,11 +194,11 @@ public class TaskControllerTest {
                 .andExpect(status().isOk());
         // .andDo(print());
 
-        var taskStatus = taskRepository.findByName(data.getTitle()).orElse(null);
+        var taskStatus = taskRepository.findById(data.getId()).orElse(null);
         assertNotNull(taskStatus);
         assertThat(taskStatus.getIndex()).isEqualTo(data.getIndex());
         assertThat(taskStatus.getAssignee().getId()).isEqualTo(data.getAssigneeId().get());
-       // assertThat(taskStatus.getName()).isEqualTo(data.getTitle());
+        assertThat(taskStatus.getName()).isEqualTo(data.getTitle());
         assertThat(taskStatus.getDescription()).isEqualTo(data.getContent());
         assertThat(taskStatus.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
     }
