@@ -1,11 +1,8 @@
 package hexlet.code.controller.api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.dto.task.TaskDTO;
-import hexlet.code.dto.task.TaskStatusDTO;
+
 import hexlet.code.mapper.TaskMapper;
-import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
@@ -16,12 +13,13 @@ import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
 import net.datafaker.Faker;
-import org.assertj.core.api.Assertions;
+
 import org.instancio.Instancio;
-import org.instancio.Select;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,9 +28,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Set;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -250,8 +249,6 @@ public class TaskControllerTest {
                 v -> v.node("content").isEqualTo(testTask.getDescription()),
                 v -> v.node("assignee_id").isEqualTo(testTask.getAssignee().getId()),
                 v -> v.node("status").isEqualTo(testTask.getTaskStatus().getSlug()));
-
-
     }
 
     @Test
@@ -263,5 +260,151 @@ public class TaskControllerTest {
 
         var task = taskRepository.findById(testTask.getId()).orElse(null);
         assertThat(task).isNull();
+    }
+
+    @Test
+    public void testIndexTaskTitleCont() throws Exception {
+        String findString = "first_string";
+        String otherString = "second_string";
+
+        testTask.setName(findString);
+        testTask.setId(null);
+        taskRepository.save(testTask);
+
+        testTask.setName(otherString);
+        testTask.setId(null);
+        taskRepository.save(testTask);
+
+        var result = mockMvc.perform(get("/api/tasks?titleCont="+findString.substring(1,4)))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element1 ->  assertThatJson(element1)
+                        .and(v -> v.node("title").asString()
+                                .contains(findString)
+                        )
+                );
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element2 -> assertThatJson(element2)
+                        .and(v -> v.node("title").asString()
+                                .doesNotContain(otherString)
+                        )
+                );
+    }
+
+    @Test
+    public void testIndexTaskAssigneeId() throws Exception {
+        taskRepository.save(testTask);
+        var firstId = testTask.getAssignee().getId();
+
+        testUser.setId(null);
+        testUser.setEmail("test@test.com");
+        userRepository.save(testUser);
+
+        testTask.setId(null);
+        testTask.setAssignee(testUser);
+        taskRepository.save(testTask);
+        var secondId = testTask.getAssignee().getId();
+
+
+        var result = mockMvc.perform(get("/api/tasks?assigneeId="+ firstId))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element1 ->  assertThatJson(element1)
+                        .node("assignee_id")
+                        .asNumber()
+                        .isEqualTo(BigDecimal.valueOf(firstId))
+                );
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element2 -> assertThatJson(element2)
+                        .node("assignee_id")
+                        .asNumber()
+                        .isNotEqualTo(BigDecimal.valueOf(secondId))
+                );
+    }
+    @Test
+    public void testIndexTaskByStatus() throws Exception {
+        String findString = testTask.getTaskStatus().getSlug();
+        taskRepository.save(testTask);
+
+        testTaskStatus.setId(null);
+        testTaskStatus.setSlug("my_test_slug");
+        taskStatusRepository.save(testTaskStatus);
+
+        testTask.setId(null);
+        testTask.setTaskStatus(testTaskStatus);
+        taskRepository.save(testTask);
+
+        String otherString = testTask.getTaskStatus().getSlug();
+
+        var result = mockMvc.perform(get("/api/tasks?status="+findString))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element1 ->  assertThatJson(element1)
+                        .and(v -> v.node("status").asString()
+                                .contains(findString)
+                        )
+                );
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element2 -> assertThatJson(element2)
+                        .and(v -> v.node("status").asString()
+                                .doesNotContain(otherString)
+                        )
+                );
+    }
+
+    @Test
+    public void testIndexTaskByLabel() throws Exception {
+        Long firstId = testLabel.getId();
+        taskRepository.save(testTask);
+
+        testLabel.setId(null);
+        testLabel.setName("my_test_label");
+        labelRepository.save(testLabel);
+
+        Long otherId = testLabel.getId();
+
+        Set<Label> labelSet = Set.of(testLabel);
+        testTask.setId(null);
+        testTask.setLabels(labelSet);
+        taskRepository.save(testTask);
+
+        var result = mockMvc.perform(get("/api/tasks?labelId=" + firstId))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element1 ->  assertThatJson(element1)
+                        .node("taskLabelIds")
+                        .isArray()
+                        .contains(BigDecimal.valueOf(firstId))
+                );
+
+        assertThatJson(body)
+                .isArray()
+                .allSatisfy(element2 -> assertThatJson(element2)
+                        .node("taskLabelIds")
+                        .isArray()
+                        .doesNotContain(BigDecimal.valueOf(otherId))
+                );
     }
 }

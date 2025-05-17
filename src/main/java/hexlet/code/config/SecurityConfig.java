@@ -1,3 +1,4 @@
+
 package hexlet.code.config;
 
 import hexlet.code.service.UserService;

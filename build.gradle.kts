@@ -40,8 +40,10 @@ dependencies {
     implementation("net.datafaker:datafaker:2.4.3")
     implementation("org.springframework.boot:spring-boot-starter-security")
 
+        // !!!!!!!!!!
+        // implementation("org.springframework.security:spring-security-core:6.0.3")
 
-    implementation("org.springframework.boot:spring-boot-starter-security")
+
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     testImplementation("org.springframework.security:spring-security-test")
 
@@ -56,12 +58,6 @@ dependencies {
 
     runtimeOnly("com.h2database:h2")           // Для разработки
     runtimeOnly("org.postgresql:postgresql")   // Для продакшена
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-
-
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
 
     implementation("org.springframework.boot:spring-boot-starter")

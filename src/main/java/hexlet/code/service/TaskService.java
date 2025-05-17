@@ -41,7 +41,6 @@ public class TaskService {
 // POST /api/tasks
     public TaskDTO create(TaskCreateDTO taskCreateDTO) {
         var task = taskMapper.map(taskCreateDTO);
-
         taskRepository.save(task);
         return taskMapper.map(task);
     }
