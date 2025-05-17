@@ -14,56 +14,53 @@ import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-    @Entity
-    @Getter
-    @Setter
-    @Table(name = "tasks")
-    @EntityListeners(AuditingEntityListener.class)
-    @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-    public class Task implements BaseEntity {
+@Entity
+@Getter
+@Setter
+@Table(name = "tasks")
+@EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Task implements BaseEntity {
 
-        @Id
-        @GeneratedValue(strategy = IDENTITY)
-        @EqualsAndHashCode.Include
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long id;
 
-        @NotNull
-        @NotBlank
-        private String name;
+    @NotNull
+    @NotBlank
+    private String name;
 
-        private Long index;
+    private Long index;
 
-        private String description;
+    private String description;
 
-        @NotNull
-        @ManyToOne
-        private TaskStatus taskStatus;
+    @NotNull
+    @ManyToOne
+    private TaskStatus taskStatus;
 
-        @ManyToOne
-        private User assignee;
+    @ManyToOne
+    private User assignee;
 
-        @CreatedDate
-        private LocalDate createdAt;
+    @CreatedDate
+    private LocalDate createdAt;
 
-        @ManyToMany
-        @JoinTable(
-                name = "task_labels",
-                joinColumns = @JoinColumn(name = "task_id"),
-                inverseJoinColumns = @JoinColumn(name = "label_id")
-        )
-        private Set<Label> labels; // = new HashSet<>();
-
+    @ManyToMany
+    @JoinTable(
+            name = "task_labels",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id")
+    )
+    private Set<Label> labels; // = new HashSet<>();
 }

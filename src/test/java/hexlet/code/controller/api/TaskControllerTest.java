@@ -275,7 +275,7 @@ public class TaskControllerTest {
         testTask.setId(null);
         taskRepository.save(testTask);
 
-        var result = mockMvc.perform(get("/api/tasks?titleCont="+findString.substring(1,4)))
+        var result = mockMvc.perform(get("/api/tasks?titleCont=" + findString.substring(1, 4)))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
@@ -284,17 +284,13 @@ public class TaskControllerTest {
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .and(v -> v.node("title").asString()
-                                .contains(findString)
-                        )
-                );
+                                .contains(findString)));
 
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .and(v -> v.node("title").asString()
-                                .doesNotContain(otherString)
-                        )
-                );
+                                .doesNotContain(otherString)));
     }
 
     @Test
@@ -312,7 +308,7 @@ public class TaskControllerTest {
         var secondId = testTask.getAssignee().getId();
 
 
-        var result = mockMvc.perform(get("/api/tasks?assigneeId="+ firstId))
+        var result = mockMvc.perform(get("/api/tasks?assigneeId=" + firstId))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
@@ -322,16 +318,14 @@ public class TaskControllerTest {
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .node("assignee_id")
                         .asNumber()
-                        .isEqualTo(BigDecimal.valueOf(firstId))
-                );
+                        .isEqualTo(BigDecimal.valueOf(firstId)));
 
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .node("assignee_id")
                         .asNumber()
-                        .isNotEqualTo(BigDecimal.valueOf(secondId))
-                );
+                        .isNotEqualTo(BigDecimal.valueOf(secondId)));
     }
     @Test
     public void testIndexTaskByStatus() throws Exception {
@@ -348,7 +342,7 @@ public class TaskControllerTest {
 
         String otherString = testTask.getTaskStatus().getSlug();
 
-        var result = mockMvc.perform(get("/api/tasks?status="+findString))
+        var result = mockMvc.perform(get("/api/tasks?status=" + findString))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
@@ -357,17 +351,13 @@ public class TaskControllerTest {
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .and(v -> v.node("status").asString()
-                                .contains(findString)
-                        )
-                );
+                                .contains(findString)));
 
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .and(v -> v.node("status").asString()
-                                .doesNotContain(otherString)
-                        )
-                );
+                                .doesNotContain(otherString)));
     }
 
     @Test
@@ -396,15 +386,13 @@ public class TaskControllerTest {
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .node("taskLabelIds")
                         .isArray()
-                        .contains(BigDecimal.valueOf(firstId))
-                );
+                        .contains(BigDecimal.valueOf(firstId)));
 
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .node("taskLabelIds")
                         .isArray()
-                        .doesNotContain(BigDecimal.valueOf(otherId))
-                );
+                        .doesNotContain(BigDecimal.valueOf(otherId)));
     }
 }

@@ -16,10 +16,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -46,5 +43,5 @@ public class Label implements BaseEntity {
     private LocalDate createdAt;
 
     @ManyToMany(mappedBy = "labels")
-    Set<Task> tasks = new HashSet<>();
+    private Set<Task> tasks; // = new HashSet<>();
 }

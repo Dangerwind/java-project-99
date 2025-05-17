@@ -1,4 +1,5 @@
 package hexlet.code.mapper;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.TargetType;

@@ -19,7 +19,7 @@ import org.mapstruct.ReportingPolicy;
 )
 public abstract class LabelMapper {
 
-    public abstract Label map(LabelDTO dto );
+    public abstract Label map(LabelDTO dto);
     public abstract LabelDTO map(Label model);
     public abstract Label map(LabelCreateDTO dto);
 

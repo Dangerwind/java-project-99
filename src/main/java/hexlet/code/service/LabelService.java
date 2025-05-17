@@ -50,7 +50,7 @@ public class LabelService {
     public void delete(long id) {
         var label = labelRepository.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException("Label not found"));
-        if(taskRepository.existsByLabelsContaining(label)) {
+        if (taskRepository.existsByLabelsContaining(label)) {
             throw new ResourceDeletionException("Нельзя удалить метку которая связана с задачей");
         }
         labelRepository.deleteById(id);

@@ -1,10 +1,9 @@
 package hexlet.code.controller.api;
 
-
 import hexlet.code.dto.label.LabelCreateDTO;
 import hexlet.code.dto.label.LabelDTO;
 import hexlet.code.dto.label.LabelUpdateDTO;
-import hexlet.code.mapper.LabelMapper;
+
 import hexlet.code.service.LabelService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -30,8 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 public class LabelController {
 
-    // private final LabelMapper labelMapper;
-    LabelService labelService;
+    private LabelService labelService;
 
 // GET /api/labels/{id}
     @GetMapping(path = "/{id}")
@@ -69,5 +67,4 @@ public class LabelController {
     public void delete(@PathVariable Long id) {
         labelService.delete(id);
     }
-
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 public class TaskDTO {
 
     private Long id;
-   // private Long taskLabelIds;
+
     private Long index;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

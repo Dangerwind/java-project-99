@@ -1,6 +1,5 @@
 package hexlet.code.controller.api;
 
-
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
