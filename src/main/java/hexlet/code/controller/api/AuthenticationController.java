@@ -1,7 +1,6 @@
 package hexlet.code.controller.api;
 
-import lombok.AllArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,22 +13,20 @@ import hexlet.code.util.JWTUtils;
 
 @RestController
 @RequestMapping("/api")
-@AllArgsConstructor
 public class AuthenticationController {
 
- //   @Autowired
+    @Autowired
     private JWTUtils jwtUtils;
 
-//    @Autowired
+    @Autowired
     private AuthenticationManager authenticationManager;
 
+// аутентификация с JSON Web Token ------------------------------------------------------
     @PostMapping("/login")
     public String create(@RequestBody AuthRequest authRequest) {
         var authentication = new UsernamePasswordAuthenticationToken(
                 authRequest.getUsername(), authRequest.getPassword());
-
         authenticationManager.authenticate(authentication);
-
         var token = jwtUtils.generateToken(authRequest.getUsername());
         return token;
     }

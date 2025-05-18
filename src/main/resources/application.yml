@@ -7,6 +7,9 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+    output:
+      ansi:
+        enabled: always
 
 springdoc:
   swagger-ui:

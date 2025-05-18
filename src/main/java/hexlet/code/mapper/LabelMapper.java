@@ -1,6 +1,5 @@
 package hexlet.code.mapper;
 
-
 import hexlet.code.dto.label.LabelCreateDTO;
 import hexlet.code.dto.label.LabelDTO;
 import hexlet.code.dto.label.LabelUpdateDTO;
@@ -22,6 +21,5 @@ public abstract class LabelMapper {
     public abstract Label map(LabelDTO dto);
     public abstract LabelDTO map(Label model);
     public abstract Label map(LabelCreateDTO dto);
-
     public abstract void update(LabelUpdateDTO dto, @MappingTarget Label model);
 }

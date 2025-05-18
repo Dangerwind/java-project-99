@@ -51,7 +51,6 @@ public class User implements UserDetails, BaseEntity {
     private String lastName;
 
     @NotBlank
-   // @NotNull
     private String passwordDigest;
 
     @CreatedDate

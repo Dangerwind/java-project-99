@@ -7,9 +7,9 @@ import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 
-import hexlet.code.service.UserService;
 import jakarta.annotation.PostConstruct;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,24 +17,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Arrays;
 import java.util.List;
 
-
 @Component
+@AllArgsConstructor
 public class DataInitializer {
 
-    @Autowired
+  //  @Autowired
     private UserRepository userRepository;
-
-    @Autowired
+  //  @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
+  //  @Autowired
     private TaskStatusRepository taskStatusRepository;
-    @Autowired
+  //  @Autowired
     private LabelRepository labelRepository;
 
-    @Autowired
-    private UserService userService;
-
+// юзер по умолчанию hexlet@example.com qwerty ----------------------------------------
     @PostConstruct
     public void initializeUsers() {
         if (userRepository.findByEmail("hexlet@example.com").isEmpty()) {
@@ -44,6 +40,7 @@ public class DataInitializer {
             userRepository.save(user);
         }
     }
+// Статусы тасков при старте ----------------------------------------------------------
     @PostConstruct
     public void initializeTaskStatuses() {
         List<String> statuses = Arrays.asList("draft", "to_review", "to_be_fixed", "to_publish", "published");
@@ -57,7 +54,7 @@ public class DataInitializer {
             });
         });
     }
-
+// Метки при старте ----------------------------------------------------------------
     @PostConstruct
     public void initializeLabels() {
         List<String> labels = Arrays.asList("feature", "bug");

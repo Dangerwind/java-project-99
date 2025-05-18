@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,10 +17,13 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import hexlet.code.service.CustomUserDetailsService;
+import hexlet.code.service.UserService;
+
+// import hexlet.code.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private JwtDecoder jwtDecoder;
@@ -27,24 +31,23 @@ public class SecurityConfig {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private CustomUserDetailsService userService;
+   // @Autowired
+  //  private CustomUserDetailsService userService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
             throws Exception {
-        // По умолчанию все запрещено
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Разрешаем доступ только к /api/login, чтобы аутентифицироваться и получить токен
+        // разрешенный доступ к основному
                         .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/welcome").permitAll()
-
+        // разрешенный доступ для фронтэнда
                         .requestMatchers("/index.html").permitAll()
                         .requestMatchers("/assets/**").permitAll()
-
+        // разрешенный доступ для Swagger
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
@@ -62,7 +65,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider daoAuthProvider(AuthenticationManagerBuilder auth) {
+    public AuthenticationProvider daoAuthProvider(PasswordEncoder passwordEncoder,
+                                                         UserService userService) {
         var provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder);

@@ -12,7 +12,6 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.util.ModelGenerator;
-import net.datafaker.Faker;
 
 import org.instancio.Instancio;
 
@@ -24,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -42,6 +42,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -63,9 +65,6 @@ public class TaskControllerTest {
     private TaskRepository taskRepository;
 
     @Autowired
-    private Faker faker;
-
-    @Autowired
     private ModelGenerator modelGenerator;
 
     @Autowired
@@ -74,12 +73,14 @@ public class TaskControllerTest {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
+    @Autowired
+    private LabelRepository labelRepository;
+
+    private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
     private Task testTask;
     private TaskStatus testTaskStatus;
     private User testUser;
     private Label testLabel;
-    @Autowired
-    private LabelRepository labelRepository;
 
     @BeforeEach
     public void setUp() {
@@ -87,11 +88,11 @@ public class TaskControllerTest {
         taskStatusRepository.deleteAll();
         userRepository.deleteAll();
 
-
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
                 .defaultResponseCharacterEncoding(StandardCharsets.UTF_8)
-                // .apply(springSecurity())
+                .apply(springSecurity())
                 .build();
+
         var internalUser = Instancio.of(modelGenerator.getUserModel()).create();
         userRepository.save(internalUser);
 
@@ -111,7 +112,7 @@ public class TaskControllerTest {
         testTask.setTaskStatus(testTaskStatus);
         testTask.setLabels(labelSet);
         // taskRepository.save(testTask);
-        // token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
+        token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
     }
 
     @AfterEach
@@ -121,13 +122,12 @@ public class TaskControllerTest {
         userRepository.deleteAll();
     }
 
-
     @Test
     public void testIndexTask() throws Exception {
 
         taskRepository.save(testTask);
 
-        var response = mockMvc.perform(get("/api/tasks")) //.with(jwt()))
+        var response = mockMvc.perform(get("/api/tasks").with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -144,13 +144,12 @@ public class TaskControllerTest {
         var data = taskMapper.map(testTask);
 
         var request = post("/api/tasks")
-                //  .with(token)
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
-        // .andDo(print());
 
         var taskStatus = taskRepository.findByName(data.getTitle()).orElse(null);
         assertNotNull(taskStatus);
@@ -167,7 +166,7 @@ public class TaskControllerTest {
         data.setTitle("");
 
         var request = post("/api/tasks")
-                //  .with(token)
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
@@ -185,13 +184,12 @@ public class TaskControllerTest {
         var data = taskMapper.map(testTask);
 
         var request = put("/api/tasks/" + testTask.getId())
-                //  .with(token)
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-        // .andDo(print());
 
         var taskStatus = taskRepository.findById(data.getId()).orElse(null);
         assertNotNull(taskStatus);
@@ -201,7 +199,7 @@ public class TaskControllerTest {
         assertThat(taskStatus.getDescription()).isEqualTo(data.getContent());
         assertThat(taskStatus.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
     }
-
+// частичное обновление, только title -----------------
     @Test
     public void testPartUpdateTask() throws Exception {
         taskRepository.save(testTask);
@@ -212,13 +210,12 @@ public class TaskControllerTest {
         var data = taskMapper.map(testTask);
 
         var request = put("/api/tasks/" + testTask.getId())
-                //  .with(token)
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(updateData));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-        // .andDo(print());
 
         var taskNew = taskRepository.findByName(updateData.get("title")).orElse(null);
         assertNotNull(taskNew);
@@ -228,8 +225,6 @@ public class TaskControllerTest {
        // assertThat(taskNew.getName()).isEqualTo(updateData.get("title"));
         assertThat(taskNew.getDescription()).isEqualTo(data.getContent());
         assertThat(taskNew.getTaskStatus().getSlug()).isEqualTo(data.getStatus());
-
-
     }
 
     @Test
@@ -237,10 +232,9 @@ public class TaskControllerTest {
 
         taskRepository.save(testTask);
 
-        var result = mockMvc.perform(get("/api/tasks/" + testTask.getId()))
+        var result = mockMvc.perform(get("/api/tasks/" + testTask.getId()).with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn();
-        //.getResponse(); //.with(jwt());
 
         var body = result.getResponse().getContentAsString();
 
@@ -255,13 +249,14 @@ public class TaskControllerTest {
     public void testDeleteTask() throws Exception {
         taskRepository.save(testTask);
 
-        mockMvc.perform(delete("/api/tasks/" + testTask.getId()))
+        mockMvc.perform(delete("/api/tasks/" + testTask.getId()).with(token))
                 .andExpect(status().isNoContent());
 
         var task = taskRepository.findById(testTask.getId()).orElse(null);
         assertThat(task).isNull();
     }
 
+// вывод тасков по фильтру, фильтр по части title --------------
     @Test
     public void testIndexTaskTitleCont() throws Exception {
         String findString = "first_string";
@@ -275,24 +270,27 @@ public class TaskControllerTest {
         testTask.setId(null);
         taskRepository.save(testTask);
 
-        var result = mockMvc.perform(get("/api/tasks?titleCont=" + findString.substring(1, 4)))
+        var result = mockMvc.perform(get("/api/tasks?titleCont=" + findString.substring(1, 4))
+                        .with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
 
+// должен содержать title который мы ищем --------------------------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .and(v -> v.node("title").asString()
                                 .contains(findString)));
 
+// а второй записи с несовпадающим titile быть не должно -------------------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .and(v -> v.node("title").asString()
                                 .doesNotContain(otherString)));
     }
-
+// вывод тасков по фильтру, фильтр по AssigneeId --------------
     @Test
     public void testIndexTaskAssigneeId() throws Exception {
         taskRepository.save(testTask);
@@ -308,11 +306,12 @@ public class TaskControllerTest {
         var secondId = testTask.getAssignee().getId();
 
 
-        var result = mockMvc.perform(get("/api/tasks?assigneeId=" + firstId))
+        var result = mockMvc.perform(get("/api/tasks?assigneeId=" + firstId).with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
 
+// ответ должен содержать исковый id юзера ---------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
@@ -320,6 +319,7 @@ public class TaskControllerTest {
                         .asNumber()
                         .isEqualTo(BigDecimal.valueOf(firstId)));
 
+// и не должен содержать id другого юзера из базы ---------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
@@ -327,6 +327,8 @@ public class TaskControllerTest {
                         .asNumber()
                         .isNotEqualTo(BigDecimal.valueOf(secondId)));
     }
+
+// поиск по Slug статуса таска ----------------
     @Test
     public void testIndexTaskByStatus() throws Exception {
         String findString = testTask.getTaskStatus().getSlug();
@@ -342,24 +344,26 @@ public class TaskControllerTest {
 
         String otherString = testTask.getTaskStatus().getSlug();
 
-        var result = mockMvc.perform(get("/api/tasks?status=" + findString))
+        var result = mockMvc.perform(get("/api/tasks?status=" + findString).with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
 
+// искомый slug должен быть в ответе -----------------------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
                         .and(v -> v.node("status").asString()
                                 .contains(findString)));
 
+// а другой slug не должен попасть в ответ если фильтр работает -------------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .and(v -> v.node("status").asString()
                                 .doesNotContain(otherString)));
     }
-
+// то же самое фильтр по label ---------------------
     @Test
     public void testIndexTaskByLabel() throws Exception {
         Long firstId = testLabel.getId();
@@ -376,11 +380,12 @@ public class TaskControllerTest {
         testTask.setLabels(labelSet);
         taskRepository.save(testTask);
 
-        var result = mockMvc.perform(get("/api/tasks?labelId=" + firstId))
+        var result = mockMvc.perform(get("/api/tasks?labelId=" + firstId).with(jwt()))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
 
+// должен быть только искомый лэйбл в ответе ----------------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element1 ->  assertThatJson(element1)
@@ -388,11 +393,20 @@ public class TaskControllerTest {
                         .isArray()
                         .contains(BigDecimal.valueOf(firstId)));
 
+// а другой лэйбл не должен попасть в ответ ----------------
         assertThatJson(body)
                 .isArray()
                 .allSatisfy(element2 -> assertThatJson(element2)
                         .node("taskLabelIds")
                         .isArray()
                         .doesNotContain(BigDecimal.valueOf(otherId)));
+    }
+
+// тест если запрос был без авторизации --------------------------------
+    @Test
+    public void testUnAuthIndexTask() throws Exception {
+        taskRepository.save(testTask);
+        var response = mockMvc.perform(get("/api/tasks"))
+                .andExpect(status().isUnauthorized());
     }
 }

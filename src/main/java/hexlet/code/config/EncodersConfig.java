@@ -22,14 +22,12 @@ import hexlet.code.component.RsaKeyProperties;
 @Configuration
 public class EncodersConfig {
 
-
     private RsaKeyProperties rsaKeys;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     JwtEncoder jwtEncoder() {

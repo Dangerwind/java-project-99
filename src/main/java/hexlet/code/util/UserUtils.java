@@ -20,4 +20,19 @@ public class UserUtils {
         var email = authentication.getName();
         return userRepository.findByEmail(email).get();
     }
+
+    public boolean isAuthor(long userId) {
+        System.out.println();
+        System.out.println(" ------------" + userId + " -----------");
+        System.out.println();
+
+        var userAuthorEmail = userRepository.findById(userId).get().getEmail();
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userAuthorEmail.equals(authentication.getName());
+    }
+
+    public User getTestUser() {
+        return userRepository.findByEmail("hexlet@example.com")
+                .orElseThrow(() -> new RuntimeException("User doesn't exist"));
+    }
 }

@@ -1,6 +1,5 @@
 package hexlet.code.mapper;
 
-
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,7 +16,6 @@ import hexlet.code.dto.user.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 @Mapper(
         uses = { JsonNullableMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
@@ -25,11 +23,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 
-
 public abstract class UserMapper {
     @Autowired
     private BCryptPasswordEncoder encoder;
-
 
     @Mapping(target = "passwordDigest", source = "password")
     public abstract User map(UserCreateDTO user);
@@ -38,7 +34,6 @@ public abstract class UserMapper {
     public abstract UserCreateDTO mapCreate(User user);
 
     public abstract User map(UserDTO user);
-
 
     public abstract UserDTO map(User user);
 

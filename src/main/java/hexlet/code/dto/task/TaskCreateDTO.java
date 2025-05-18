@@ -27,6 +27,6 @@ public class TaskCreateDTO {
     @JsonProperty("assignee_id")
     private JsonNullable<Long> assigneeId;
 
-    private Set<Long> taskLabelIds; // = new HashSet<>();
+    private Set<Long> taskLabelIds;
 }
 

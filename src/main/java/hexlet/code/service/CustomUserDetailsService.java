@@ -1,5 +1,5 @@
 package hexlet.code.service;
-
+/*
 import hexlet.code.model.User;
 import lombok.AllArgsConstructor;
 
@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+
 
 
 import hexlet.code.repository.UserRepository;
@@ -55,3 +56,5 @@ public class CustomUserDetailsService implements UserDetailsManager {
         throw new UnsupportedOperationException("Unimplemented method 'userExists'");
     }
 }
+
+ */
