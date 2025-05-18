@@ -24,7 +24,6 @@ public class TaskStatusService {
     private TaskStatusMapper taskStatusMapper;
     private TaskRepository taskRepository;
 
-
     //GET /api/task_statuses/{id}
     public TaskStatusDTO show(long id) {
         var taskStatuses = taskStatusRepository.findById(id)

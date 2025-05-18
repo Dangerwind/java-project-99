@@ -15,7 +15,6 @@ public class TaskSpecification {
                 .and(withAssigneeId(dto.getAssigneeId()))
                 .and(withStatus(dto.getStatus()))
                 .and(withLabelId(dto.getLabelId()));
-
     }
 
     private Specification<Task> withTitleCont(String titleCont) {
@@ -45,5 +44,4 @@ public class TaskSpecification {
                         ? cb.conjunction()
                         : cb.equal(root.join("labels").get("id"), labelId);
     }
-
 }

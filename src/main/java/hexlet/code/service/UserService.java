@@ -7,6 +7,7 @@ import hexlet.code.exception.ResourceDeletionException;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,18 +19,19 @@ import hexlet.code.exception.ResourceNotFoundException;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
+    // @Autowired
     private UserRepository userRepository;
 
-    @Autowired
+    //@Autowired
     private UserMapper userMapper;
 
-    @Autowired
+    //@Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
+    //@Autowired
     private TaskRepository taskRepository;
 
     //GET /api/users
@@ -74,18 +76,10 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return user;
     }
-/*
-    public String getUserEmailById(Long id) {
-        return userRepository.findById(id)
-                .map(User::getEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-*/
 }
