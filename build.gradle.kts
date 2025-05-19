@@ -28,6 +28,7 @@ sentry {
     org = "andrei-3n"
     projectName = "java-spring-boot"
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    println("!!!!!! ----- SENTRY_AUTH_TOKEN is set: ${System.getenv("SENTRY_AUTH_TOKEN") != null}")
 }
 
 tasks.withType<JavaExec>().configureEach {

@@ -15,10 +15,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
 
       - name: Hexlet project check
         uses: hexlet/project-action@release
+
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
