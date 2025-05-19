@@ -9,7 +9,11 @@
 # **"Менеджер задач"**
 
 Учебный проект, разработка backend для менеджера задач.  
+В проекте реализована работа с базой данных, связи OntToMany и ManyToMany и многое другое.
 
 Проект задеплоин на render.com и доступен по [ссылке](https://java-project-72-qx5q.onrender.com/)
+Чтобы получить спецификацию OpenAPI, нажмите на [ссылку](https://java-project-72-qx5q.onrender.com//swagger-ui/index.html) 
+![](https://github.com/Dangerwind/java-project-99/blob/main/img/swagger.png)
 
-
+В этом проекте используется Sentry (sentry.io) для сбора и отслеживания ошибок и исключений в приложении.
+![](https://github.com/Dangerwind/java-project-99/blob/main/img/sentry.png)
