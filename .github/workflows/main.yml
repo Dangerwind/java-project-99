@@ -20,7 +20,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.17"
+          gradle-version: "8.13"
 
       - name: Build with Gradle
         run: ./gradlew build
