@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     id("io.freefair.lombok") version "8.6"
     id("org.sonarqube") version "6.2.0.5505"
+    id("io.sentry.jvm.gradle") version "5.6.0"
 }
 
 group = "hexlet.code"
@@ -17,6 +18,15 @@ sonar {
         property("sonar.organization", "andreykokorev")
         property("sonar.host.url", "https://sonarcloud.io")
     }
+}
+
+sentry {
+
+    // SENTRY_AUTH_TOKEN=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
+
+    org = "andrei-3n"
+    projectName = "java-task-manager"
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
 
 application {

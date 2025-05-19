@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/login").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/welcome").permitAll()
+                        .requestMatchers("/test").permitAll()
         // разрешенный доступ для фронтэнда
                         .requestMatchers("/index.html").permitAll()
                         .requestMatchers("/assets/**").permitAll()
