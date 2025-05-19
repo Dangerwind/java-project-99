@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod  # "prod" если продакшен
+    active: dev  # "prod" если продакшен
 
   jpa:
     show-sql: true
