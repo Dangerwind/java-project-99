@@ -16,7 +16,7 @@ rsa:
   public-key: classpath:certs/public.pem
 
 sentry:
-  dsn: https://3df6a47de42aa59308d22d4c2b5a5dc3@o4509350427295744.ingest.us.sentry.io/4509350431424512
+  dsn: https://87444bfc3622787d0bbc9fb2b89c6307@o4509350427295744.ingest.us.sentry.io/4509350461898752
   # Add data like request headers and IP for users,
   # see https://docs.sentry.io/platforms/java/guides/spring-boot/data-management/data-collected/ for more info
   send-default-pii: true

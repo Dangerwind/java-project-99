@@ -21,13 +21,15 @@ sonar {
 }
 
 sentry {
-
-    // SENTRY_AUTH_TOKEN=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
+    includeSourceContext = true
 
     org = "andrei-3n"
     projectName = "java-spring-boot"
-    authToken = "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"
-    //System.getenv("SENTRY_AUTH_TOKEN")
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
+tasks.withType<JavaExec>().configureEach {
+    systemProperty("SENTRY_AUTH_TOKEN", System.getProperty("SENTRY_AUTH_TOKEN"))
 }
 
 application {
