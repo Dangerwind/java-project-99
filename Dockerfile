@@ -1,6 +1,7 @@
 FROM eclipse-temurin:21-jdk
 
 ARG GRADLE_VERSION=8.13
+ARG SENTRY_AUTH_TOKEN
 
 # Установка unzip и wget
 RUN apt-get update && apt-get install -yq unzip wget
@@ -13,6 +14,9 @@ RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-b
 
 ENV GRADLE_HOME=/opt/gradle
 ENV PATH=$PATH:$GRADLE_HOME/bin
+
+# Передаем токен в переменную окружения для сборки
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 
 # Копируем проект
 WORKDIR /app
