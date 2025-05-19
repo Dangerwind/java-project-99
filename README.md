@@ -5,9 +5,12 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=andreykokorev_dangerwind&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andreykokorev_dangerwind)
 
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=andreykokorev_dangerwind&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=andreykokorev_dangerwind)
+
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=andreykokorev_dangerwind&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=andreykokorev_dangerwind)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=andreykokorev_dangerwind&metric=coverage)](https://sonarcloud.io/summary/new_code?id=andreykokorev_dangerwind)
+
 
 https://java-project-72-qx5q.onrender.com/welcome
 
-In the Name field, enter  SONAR_TOKEN
-
-In the Value field, enter ea7e44b9004ad210c8bb1a8c51ebb84fdc048adc
