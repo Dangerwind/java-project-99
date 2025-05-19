@@ -5,10 +5,19 @@ plugins {
     id("org.springframework.boot") version "3.4.5"
     id("io.spring.dependency-management") version "1.1.7"
     id("io.freefair.lombok") version "8.6"
+    id("org.sonarqube") version "6.2.0.5505"
 }
 
 group = "hexlet.code"
 version = "0.0.1-SNAPSHOT"
+
+sonar {
+    properties {
+        property("sonar.projectKey", "andreykokorev_dangerwind")
+        property("sonar.organization", "andreykokorev")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
 
 application {
     mainClass.set("hexlet.code.AppApplication")
