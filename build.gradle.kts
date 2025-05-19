@@ -1,3 +1,5 @@
+println("SENTRY_AUTH_TOKEN is set: ${System.getenv("SENTRY_AUTH_TOKEN") != null}")
+
 plugins {
     application
     checkstyle
