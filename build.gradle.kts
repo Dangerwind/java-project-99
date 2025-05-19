@@ -21,14 +21,16 @@ sonar {
         property("sonar.host.url", "https://sonarcloud.io")
     }
 }
+val sentryToken = System.getenv("SENTRY_AUTH_TOKEN") ?: "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"
 
 sentry {
     includeSourceContext = true
 
     org = "andrei-3n"
     projectName = "java-spring-boot"
-    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    // authToken = System.getenv("SENTRY_AUTH_TOKEN")
     println("!!!!!! ----- SENTRY_AUTH_TOKEN is set: ${System.getenv("SENTRY_AUTH_TOKEN") != null}")
+    authToken = sentryToken
 }
 
 tasks.withType<JavaExec>().configureEach {
