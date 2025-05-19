@@ -10,7 +10,6 @@ import hexlet.code.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

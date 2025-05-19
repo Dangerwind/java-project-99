@@ -32,6 +32,7 @@ repositories {
 
 dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+
     implementation("org.springframework.boot:spring-boot-configuration-processor")
 
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
