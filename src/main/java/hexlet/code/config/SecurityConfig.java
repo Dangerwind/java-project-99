@@ -19,7 +19,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import hexlet.code.service.UserService;
 
-// import hexlet.code.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
