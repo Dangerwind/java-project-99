@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Dangerwind/java-project-99/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Dangerwind/java-project-99/actions)
-[![Java CI](https://github.com/Dangerwind/java-project-99/actions/workflows/main.yml/badge.svg)](https://github.com/Dangerwind/java-project-99/actions/workflows/main.yml)
+[![Java CI](https://github.com/Dangerwind/java-project-99/actions/workflows/gradle.yml/badge.svg)](https://github.com/Dangerwind/java-project-99/actions/workflows/gradle.yml)
 
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=andreykokorev_dangerwind&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andreykokorev_dangerwind)
