@@ -16,11 +16,7 @@ Statuses <br>
 Проект задеплоин на render.com и доступен по [ссылке](https://java-project-72-qx5q.onrender.com/)
 
 
-для первого входа используйте логин: ```
-hexlet@example.com
-``` и пароль: ```
-qwerty
-``` 
+для первого входа используйте логин: ```hexlet@example.com``` и пароль: ```qwerty``` 
 
 
 <hr>

@@ -86,7 +86,7 @@ dependencies {
 
 
     runtimeOnly("com.h2database:h2")           // Для разработки
-    runtimeOnly("org.postgresql:postgresql")   // Для продакшена
+    implementation("org.postgresql:postgresql")   // Для продакшена
 
 
     implementation("org.springframework.boot:spring-boot-starter")
