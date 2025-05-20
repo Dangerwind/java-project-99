@@ -23,7 +23,7 @@ Statuses <br>
 
 <hr>
 
-Чтобы получить спецификацию OpenAPI, нажмите на [ссылку](https://tast-manager-49jx.onrender.com/swagger-ui/index.html) 
+Чтобы получить спецификацию OpenAPI, нажмите на [ссылку](https://tast-manager-49jx.onrender.com/swagger-ui.html) 
 ![](https://github.com/Dangerwind/java-project-99/blob/main/img/swagger.png)
 
 <hr>
