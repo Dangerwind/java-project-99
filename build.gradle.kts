@@ -104,3 +104,11 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+// Hostname   dpg-d0m3c30dl3ps73bvmomg-a
+// Port   5432
+// Database task_manager_db_kiut
+// Username   task_manager_db_kiut_user
+// Password  sh07GlGaTsTdcDIJfTJo04jTeAxBHoFf
+// Internal Database URL postgresql://task_manager_db_kiut_user:sh07GlGaTsTdcDIJfTJo04jTeAxBHoFf@dpg-d0m3c30dl3ps73bvmomg-a/task_manager_db_kiut
+// External Database URL   postgresql://task_manager_db_kiut_user:sh07GlGaTsTdcDIJfTJo04jTeAxBHoFf@dpg-d0m3c30dl3ps73bvmomg-a.oregon-postgres.render.com/task_manager_db_kiut
+// PSQL Command  PGPASSWORD=sh07GlGaTsTdcDIJfTJo04jTeAxBHoFf psql -h dpg-d0m3c30dl3ps73bvmomg-a.oregon-postgres.render.com -U task_manager_db_kiut_user task_manager_db_kiut

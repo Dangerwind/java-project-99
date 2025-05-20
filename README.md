@@ -11,9 +11,9 @@ Statuses <br>
 
 
 Учебный проект, разработка backend для менеджера задач.  
-Проект реализован на SpringBoot. В проекте производится работа с базой данных, связи OntToMany и ManyToMany и многое другое.
+Проект реализован на SpringBoot,  проекте производится работа с базой данных, связи OntToMany и ManyToMany и многое другое.
 
-Проект задеплоин на render.com и доступен по [ссылке](https://java-project-72-qx5q.onrender.com/)
+Проект задеплоин на render.com и доступен по [ссылке](https://tast-manager-49jx.onrender.com/)
 
 
 для первого входа используйте логин: ```hexlet@example.com``` и пароль: ```qwerty``` 
