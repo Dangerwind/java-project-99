@@ -11,20 +11,23 @@ Statuses <br>
 
 
 Учебный проект, разработка backend для менеджера задач.  
-Проект реализован на SpringBoot,  проекте производится работа с базой данных, связи OntToMany и ManyToMany и многое другое.
+Проект реализован на SpringBoot, и работает с базами данных как локально H2, так и в PosgreSQL. 
+Используется Spring Security для решения проблемы доступа к ресурсам.
+
 
 Проект задеплоин на render.com и доступен по [ссылке](https://tast-manager-49jx.onrender.com/)
 
 
-для первого входа используйте логин: ```hexlet@example.com``` и пароль: ```qwerty``` 
+Для первого входа используйте логин: ```hexlet@example.com``` и пароль: ```qwerty``` 
 
 
 <hr>
 
-Чтобы получить спецификацию OpenAPI, нажмите на [ссылку](https://java-project-72-qx5q.onrender.com//swagger-ui/index.html) 
+Чтобы получить спецификацию OpenAPI, нажмите на [ссылку](https://tast-manager-49jx.onrender.com/swagger-ui/index.html) 
 ![](https://github.com/Dangerwind/java-project-99/blob/main/img/swagger.png)
 
 <hr>
 
 В этом проекте используется Sentry (sentry.io) для сбора и отслеживания ошибок и исключений в приложении.
+Для формирования тестовой ошибки нажмите на [ссылку](https://tast-manager-49jx.onrender.com/test)
 ![](https://github.com/Dangerwind/java-project-99/blob/main/img/sentry.png)
