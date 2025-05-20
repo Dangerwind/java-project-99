@@ -20,24 +20,8 @@ public class WelcomeController {
     }
 
 
-    @GetMapping(path = "/test", produces = MediaType.TEXT_HTML_VALUE)
-    public ResponseEntity<String> testError() throws IOException {
-        CompletableFuture.runAsync(() -> {
-            try {
-                throw new Exception("This is a test.");
-            } catch (Exception e) {
-                Sentry.captureException(e);
-            }
-        });
 
-        var resource = new ClassPathResource("static/test-error.html");
-        String html = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-
-        return ResponseEntity.ok(html);
-    }
-
-
-    @GetMapping(path = "/tester")
+    @GetMapping(path = "/test")
     public void testErrorNext() {
         try {
             throw new Exception("This is a test.");
@@ -46,4 +30,3 @@ public class WelcomeController {
         }
     }
 }
-
