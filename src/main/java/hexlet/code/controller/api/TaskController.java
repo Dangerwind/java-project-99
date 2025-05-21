@@ -10,7 +10,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -33,14 +32,12 @@ public class TaskController {
 
  //GET /api/tasks/{id} ----------------------------------------
     @GetMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     public TaskDTO show(@PathVariable Long id) {
         return taskService.show(id);
     }
 //GET /api/tasks  ----------------------------------------
     @GetMapping(path = "")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TaskDTO>> index(TaskParamsDTO params) {
         var result = taskService.index(params);
@@ -50,7 +47,6 @@ public class TaskController {
     }
 // POST /api/tasks  ----------------------------------------
     @PostMapping(path = "")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(@RequestBody @Valid TaskCreateDTO dto) {
         return taskService.create(dto);
@@ -58,14 +54,12 @@ public class TaskController {
 
 // PUT /api/tasks/{id}  ----------------------------------------
     @PutMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     public TaskDTO update(@PathVariable Long id, @RequestBody @Valid TaskUpdateDTO dto) {
         return taskService.update(id, dto);
     }
 // DELETE /api/tasks/{id}  ----------------------------------------
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         taskService.delete(id);

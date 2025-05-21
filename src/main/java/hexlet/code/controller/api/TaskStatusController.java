@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,21 +47,18 @@ public class TaskStatusController {
     }
 //POST /api/task_statuses ----------------------------------------
     @PostMapping(path = "")
-    @PreAuthorize("isAuthenticated()")  // доступ на создание только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.CREATED)
     public TaskStatusDTO create(@RequestBody @Valid TaskStatusCreateDTO createDTO) {
         return taskStatusService.create(createDTO);
     }
 //PUT /api/task_statuses/{id}  ----------------------------------------
     @PutMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")  // доступ на изменение только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.OK)
     public TaskStatusDTO update(@PathVariable Long id, @RequestBody @Valid TaskStatusUpdateDTO updateDTO) {
         return taskStatusService.update(id, updateDTO);
     }
 //DELETE /api/task_statuses/{id}  ----------------------------------------
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")  // доступ на удаление только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         taskStatusService.delete(id);

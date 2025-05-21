@@ -2,7 +2,6 @@ package hexlet.code.dto.task;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +20,5 @@ public class TaskStatusDTO {
     @NotBlank
     private String slug;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
 }

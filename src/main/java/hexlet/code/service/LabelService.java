@@ -36,7 +36,9 @@ public class LabelService {
     }
 //POST /api/labels
     public LabelDTO create(LabelCreateDTO labelDTO) {
-        return labelMapper.map(labelRepository.save(labelMapper.map(labelDTO)));
+        return labelMapper.map(
+                labelRepository.save(
+                        labelMapper.map(labelDTO)));
     }
 //PUT /api/labels/{id}
     public LabelDTO update(long id, LabelUpdateDTO dto) {

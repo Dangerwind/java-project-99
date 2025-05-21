@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +30,12 @@ public class LabelController {
 
 // GET /api/labels/{id}  --------------------------------------------
     @GetMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")  // доступ на просмотр лэйбла аутентифицированным юзерам
     @ResponseStatus(HttpStatus.OK)
     public LabelDTO show(@PathVariable Long id) {
         return labelService.show(id);
     }
 // GET /api/labels  -------------------------------------------------
     @GetMapping(path = "")
-    @PreAuthorize("isAuthenticated()")  // доступ на просмотр лэйблов аутентифицированным юзерам
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<LabelDTO>> showAll() {
         var result = labelService.showAll();
@@ -48,21 +45,18 @@ public class LabelController {
     }
 // POST /api/labels -----------------------------------------------
     @PostMapping(path = "")
-    @PreAuthorize("isAuthenticated()")  // создавать лэйблы доступно только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.CREATED)
     public LabelDTO create(@RequestBody @Valid LabelCreateDTO label) {
         return labelService.create(label);
     }
 // PUT /api/labels/{id}
     @PutMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")  // изменять лэйблы доступно только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.OK)
     public LabelDTO update(@PathVariable Long id, @RequestBody @Valid LabelUpdateDTO label) {
         return labelService.update(id, label);
     }
 // DELETE /api/labels/{id}
     @DeleteMapping(path = "/{id}")
-    @PreAuthorize("isAuthenticated()")  // удалять лэйблы доступно только аутентифицированным юзерам
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         labelService.delete(id);

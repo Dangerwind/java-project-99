@@ -87,6 +87,8 @@ public class UsersControllerTest {
 
     @BeforeEach
     public void setUp() {
+        taskRepository.deleteAll();
+        taskStatusRepository.deleteAll();
         userRepository.deleteAll();
 
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
